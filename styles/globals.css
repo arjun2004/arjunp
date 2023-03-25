@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Silkscreen&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background-color: black;
+  font-family: "JetBrains Mono", monospace;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: green;
+
+    background: black;
+  }
+}
+h1 {
+  text-align: center;
+  font-family: "Silkscreen", cursive;
+  font-size: 3.8rem;
+}
+ul {
+  list-style-type: none;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+li {
+  display: inline;
+  padding: 1.8%;
+  font-family: "Lobster", cursive;
+}
+.bio {
+  margin-top: 3.5rem;
+  text-align: center;
+  font-size: 1rem;
+}
+.contacts{
+  margin-top: 3.5rem;
+  text-align: center;
+  font-size: 1rem;
+}
