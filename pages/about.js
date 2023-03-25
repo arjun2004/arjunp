@@ -1,9 +1,9 @@
 import Head from "next/head";
 import Image from "next/image";
-import "./components/writer.js";
+//import "./components/writer.js";
 import Navbar from "./components/Navbar";
 
-function about() {
+export default function about() {
   return (
     <div>
       <Head>
@@ -19,4 +19,3 @@ function about() {
   );
 }
 
-export default about;

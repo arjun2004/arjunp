@@ -1,10 +1,10 @@
 import Head from "next/head";
 import Image from "next/image";
-import "./components/writer.js";
+//import "./components/writer.js";
 import Navbar from "./components/Navbar";
-import React from "react";
+//import React from "react";
 
-function contact() {
+export default function contact() {
   return (
     <div>
       <Head>
@@ -23,4 +23,4 @@ function contact() {
   );
 }
 
-export default contact;
+
