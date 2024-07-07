@@ -17,7 +17,7 @@ function App() {
             <a href="https://github.com/arjun2004" className="btn btn-lg btn-light fw-bold border-white bg-white rounded-pill"><AiFillGithub/>&nbsp;Github</a>
             <a href="https://www.linkedin.com/in/arjun-p-bb5920242" className="btn btn-lg btn-light fw-bold border-white bg-white rounded-pill"><AiFillLinkedin/>&nbsp;LinkedIn</a>
             <a href="mailto:arjunajju2004@gmail.com" className="btn btn-lg btn-light fw-bold border-white bg-white rounded-pill"><AiOutlineMail/>&nbsp;Email</a>
-            <a href="tel:+919074353513" className="btn btn-lg btn-light fw-bold border-white bg-white rounded-pill"><AiFillPhone/>&nbsp;Mobile no.</a>
+            
             
           </div>
         </div>
