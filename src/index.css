@@ -44,3 +44,14 @@
 }
 
 /* This is just to transition when you change the viewport size. */
+@media (max-width: 720px) {
+  .gradient {
+    --size: 60vmin; /* Scale down for smaller screens */
+  }
+}
+.cf {
+  max-width: 100%; /* Prevent horizontal overflow */
+  position: relative; /* Ensure content is above the gradient */
+  z-index: 1;
+  overflow: hidden; /* Prevent child overflow */
+}
