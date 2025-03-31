@@ -1,102 +1,123 @@
+"use client";
 import Image from "next/image";
-
+import React from "react";
+import {
+  Github,
+  Linkedin,
+  Mail,
+  ExternalLink,
+  Code2,
+  Briefcase,
+  GraduationCap,
+  ChevronDown,
+  Download,
+} from "lucide-react";
 export default function Home() {
+  const scrollToBottom = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: "smooth",
+    });
+  };
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
+      <header className="min-h-screen flex flex-col items-center justify-center relative px-4">
+        <div className="max-w-4xl text-center">
+          <Image
+            src="/img.png"
+            alt="Arjun Patel"
+            width={128} // Equivalent to w-32
+            height={128} // Equivalent to h-32
+            className="rounded-full mx-auto border-4 border-blue-400/20 shadow-xl mb-6"
+          />
+          <h1 className="text-5xl py-2 md:text-7xl md:py-2 lg:py-3 font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
+            Arjun P
+          </h1>
+          <p className="text-l md:text-xl text-gray-300 mb-8">
+            Hi, I'm Arjun, a B.Tech Computer Science (AI) student at Mar
+            Baselios College. I'm a front-end web developer with a strong
+            foundation in AI, passionate about building intuitive and
+            intelligent digital experiences.{" "}
+          </p>
+          <div className="flex gap-6 justify-center mb-12">
+            <a
+              href="https://github.com/arjun2004"
+              className="hover:text-blue-400 transition-colors"
+            >
+              <Github size={24} />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/arjun-p-bb5920242/"
+              className="hover:text-blue-400 transition-colors"
+            >
+              <Linkedin size={24} />
+            </a>
+            <a
+              href="mailto:arjunajju2004@gmail.com"
+              className="hover:text-blue-400 transition-colors"
+            >
+              <Mail size={24} />
+            </a>
+          </div>
           <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            href="/cv.pdf"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-full transition-colors"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
+            <Download />
+            Download CV
           </a>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={scrollToBottom}
+          className="absolute bottom-8 cursor-pointer hover:text-blue-400 transition-colors"
+          aria-label="Scroll to bottom"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+          <ChevronDown size={32} className="animate-bounce" />
+        </button>{" "}
+      </header>
+      <section className="py-20 px-4">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold mb-8 flex items-center gap-2">
+            <Code2 className="text-blue-400" />
+            About Me
+          </h2>
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <p className="text-gray-300">
+                Hey, I'm Arjun, a B.Tech Computer Science (AI) student at Mar
+                Baselios College, passionate about front-end web development and
+                artificial intelligence. I specialize in building modern,
+                responsive web applications using React.js and Tailwind CSS,
+                ensuring seamless user experiences with clean and efficient
+                code.
+              </p>
+              <p className="text-gray-300 mt-4">
+                Alongside web development, I have a strong foundation in machine
+                learning and artificial intelligence, allowing me to develop AI
+                models and integrate intelligent solutions into applications.
+                Whether it's crafting interactive web interfaces or exploring
+                AI-driven innovations, I'm always eager to push boundaries and
+                expand my expertise. I'm driven by curiosity, a problem-solving
+                mindset, and a commitment to continuous learning in the
+                ever-evolving tech landscape.
+              </p>
+            </div>
+            <div className="flex justify-center">
+              <Image
+                src="/photo.png"
+                alt="Arjun P"
+                width={300}
+                height={300}
+                className="rounded-lg shadow-lg"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer className="py-8 px-4 text-center text-gray-400">
+        <p>© Arjun P. Made with love using Next.JS + Tailwind CSS ❤️</p>
       </footer>
     </div>
   );
