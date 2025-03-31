@@ -31,7 +31,7 @@ export default function Home() {
             Arjun P
           </h1>
           <p className="text-l md:text-xl text-gray-300 mb-8">
-            Hi, I'm Arjun, a B.Tech Computer Science (AI) student at Mar
+            Hi, I&apos;m Arjun, a B.Tech Computer Science (AI) student at Mar
             Baselios College. I&apos;m a front-end web developer with a strong
             foundation in AI, passionate about building intuitive and
             intelligent digital experiences.{" "}
