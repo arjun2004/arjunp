@@ -5,10 +5,7 @@ import {
   Github,
   Linkedin,
   Mail,
-  ExternalLink,
   Code2,
-  Briefcase,
-  GraduationCap,
   ChevronDown,
   Download,
 } from "lucide-react";
