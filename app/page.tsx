@@ -32,7 +32,7 @@ export default function Home() {
           </h1>
           <p className="text-l md:text-xl text-gray-300 mb-8">
             Hi, I'm Arjun, a B.Tech Computer Science (AI) student at Mar
-            Baselios College. I'm a front-end web developer with a strong
+            Baselios College. I&apos;m a front-end web developer with a strong
             foundation in AI, passionate about building intuitive and
             intelligent digital experiences.{" "}
           </p>
@@ -83,9 +83,9 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
               <p className="text-gray-300">
-                Hey, I'm Arjun, a B.Tech Computer Science (AI) student at Mar
-                Baselios College, passionate about front-end web development and
-                artificial intelligence. I specialize in building modern,
+                Hey, I&apos;m Arjun, a B.Tech Computer Science (AI) student at
+                Mar Baselios College, passionate about front-end web development
+                and artificial intelligence. I specialize in building modern,
                 responsive web applications using React.js and Tailwind CSS,
                 ensuring seamless user experiences with clean and efficient
                 code.
@@ -94,11 +94,11 @@ export default function Home() {
                 Alongside web development, I have a strong foundation in machine
                 learning and artificial intelligence, allowing me to develop AI
                 models and integrate intelligent solutions into applications.
-                Whether it's crafting interactive web interfaces or exploring
-                AI-driven innovations, I'm always eager to push boundaries and
-                expand my expertise. I'm driven by curiosity, a problem-solving
-                mindset, and a commitment to continuous learning in the
-                ever-evolving tech landscape.
+                Whether it&apos;s crafting interactive web interfaces or
+                exploring AI-driven innovations, I&apos;m always eager to push
+                boundaries and expand my expertise. I&apos;m driven by
+                curiosity, a problem-solving mindset, and a commitment to
+                continuous learning in the ever-evolving tech landscape.
               </p>
             </div>
             <div className="flex justify-center">
