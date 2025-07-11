@@ -57,13 +57,13 @@ export default function Home() {
             </a>
           </div>
           <a
-            href="/cv.pdf"
+            href="/resume.pdf"
             className="inline-flex items-center gap-2 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-full transition-colors"
             target="_blank"
             rel="noopener noreferrer"
           >
             <Download />
-            Download CV
+            Download Resume
           </a>
         </div>
         <button
