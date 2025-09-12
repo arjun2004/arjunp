@@ -47,7 +47,7 @@ const Contact = () => {
         setStatus("error");
         setFeedback(message);
       }
-    } catch (_error) {
+    } catch {
       setStatus("error");
       setFeedback("Network error. Please check your connection and try again.");
     }
