@@ -1,28 +1,242 @@
-@config "../tailwind.config.ts";
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------
+   Design tokens
+   Raw ramps live here; semantic aliases below flip per colour scheme
+   so components can use bg-surface / text-fg-muted with no dark: prefix.
+   --------------------------------------------------------------- */
+@theme {
+  --color-ink-950: #060606;
+  --color-ink-900: #0a0a0a;
+  --color-ink-850: #121010;
+  --color-ink-800: #181313;
+  --color-ink-700: #241717;
+  --color-ink-600: #351c1c;
+
+  --color-accent-300: #fca5a5;
+  --color-accent-400: #f87171;
+  --color-accent-500: #ef4444;
+  --color-accent-600: #dc2626;
+  --color-accent-700: #991b1b;
+  --color-accent-alt: #450a0a;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+
+  --font-display: var(--font-display-serif), ui-serif, Georgia, "Times New Roman",
+    serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-mono: var(--font-mono-jb), ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+
+  --animate-float: float 8s ease-in-out infinite;
+  --animate-glow: glow 6s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.4s linear infinite;
+  --animate-pulse-dot: pulse-dot 2s ease-in-out infinite;
+  --animate-drift: drift 26s ease-in-out infinite;
+  --animate-grain: grain 1.1s steps(6) infinite;
+  --animate-sweep: sweep 14s linear infinite;
+}
+
+:root {
+  --bg: #faf7f7;
+  --surface: #ffffff;
+  --raised: #fffdfd;
+  --border: #ecdede;
+  --border-strong: #d4bebe;
+  --fg: #1a1111;
+  --fg-muted: #574a4a;
+  --fg-subtle: #8a7878;
+  --accent: #991b1b;
+  --accent-fg: #991b1b;
+
+  --rule: rgba(26, 17, 17, 0.14);
+  --grid-line: rgba(26, 17, 17, 0.05);
+  --glow-a: rgba(239, 68, 68, 0.2);
+  --glow-b: rgba(153, 27, 27, 0.14);
+  --grain-opacity: 0.05;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0a0a0a;
+  --surface: #121010;
+  --raised: #181313;
+  --border: #2b1e1e;
+  --border-strong: #3f2a2a;
+  --fg: #f4ecec;
+  --fg-muted: #a79a9a;
+  --fg-subtle: #7a6d6d;
+  --accent: #ef4444;
+  --accent-fg: #fca5a5;
+
+  --rule: rgba(244, 236, 236, 0.16);
+  --grid-line: rgba(252, 165, 165, 0.055);
+  --glow-a: rgba(239, 68, 68, 0.13);
+  --glow-b: rgba(69, 10, 10, 0.5);
+  --grain-opacity: 0.085;
+  color-scheme: dark;
+}
+
 @layer base {
-  html {
-    @apply !scroll-smooth;
+  * {
+    border-color: var(--border);
   }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
-    @apply bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100;
+    overflow-x: hidden;
+    background-color: var(--bg);
+    color: var(--fg);
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--accent) 28%, transparent);
+    color: var(--fg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+
+  /* Display face carries the headings; Inter stays on UI + body copy. */
+  .font-display {
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    font-feature-settings: "liga", "kern";
+  }
+
+  p {
+    text-wrap: pretty;
   }
 }
 
 @layer utilities {
-  @keyframes blob {
-    0% {
-      transform: translate(0px, 0px) scale(1);
-    }
-    33% {
-      transform: translate(30px, -50px) scale(1.1);
-    }
-    66% {
-      transform: translate(-20px, 20px) scale(0.9);
-    }
-    100% {
-      transform: translate(0px, 0px) scale(1);
-    }
+  /* Hand-drawn style underline for the one emphasised display word. */
+  .marked {
+    position: relative;
+    display: inline-block;
+  }
+  .marked::after {
+    content: "";
+    position: absolute;
+    left: -0.05em;
+    right: -0.05em;
+    bottom: 0.16em;
+    height: 0.26em;
+    background-color: color-mix(in srgb, var(--accent) 34%, transparent);
+    border-radius: 2px 10px 4px 8px;
+    transform: rotate(-0.5deg);
+    z-index: -1;
+  }
+
+  .rule-t {
+    border-top: 1px solid var(--rule);
+  }
+
+  /* Glass surface shared by every card */
+  .glass {
+    background-color: color-mix(in srgb, var(--raised) 72%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .bg-grid {
+    background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+
+  /* Film grain -- the cheapest way to stop a flat dark page looking synthetic */
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: -150%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: var(--grain-opacity);
+    animation: var(--animate-grain);
+    pointer-events: none;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(24px, -32px, 0) scale(1.06); }
+  66% { transform: translate3d(-18px, 18px, 0) scale(0.96); }
+}
+
+@keyframes glow {
+  0%, 100% { opacity: 0.65; }
+  50% { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  25% { transform: translate3d(5vw, -4vh, 0) scale(1.12) rotate(4deg); }
+  50% { transform: translate3d(-3vw, 5vh, 0) scale(0.94) rotate(-3deg); }
+  75% { transform: translate3d(-6vw, -2vh, 0) scale(1.06) rotate(2deg); }
+}
+
+@keyframes sweep {
+  0% { transform: translate3d(-18%, 0, 0); }
+  50% { transform: translate3d(18%, 0, 0); }
+  100% { transform: translate3d(-18%, 0, 0); }
+}
+
+/* 6-step jitter keeps the grain alive without a video or canvas */
+@keyframes grain {
+  0% { transform: translate3d(0, 0, 0); }
+  20% { transform: translate3d(-3%, 2%, 0); }
+  40% { transform: translate3d(2%, -3%, 0); }
+  60% { transform: translate3d(-2%, -2%, 0); }
+  80% { transform: translate3d(3%, 1%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.82); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }

@@ -1,76 +1,121 @@
 import React from "react";
+import { ArrowDown, ArrowRight, Github, Linkedin, Mail, MapPin } from "lucide-react";
+import { profile, stats } from "@/app/data/profile";
+import Reveal from "../ui/Reveal";
+import TiltPhoto from "../ui/TiltPhoto";
 
-const Section: React.FC<{
-  id: string;
-  className?: string;
-  children: React.ReactNode;
-}> = ({ id, children, className = "" }) => (
-  <section id={id} className={`py-20 md:py-28 ${className}`}>
-    {children}
+const socials = [
+  { href: profile.github, label: "GitHub", Icon: Github },
+  { href: profile.linkedin, label: "LinkedIn", Icon: Linkedin },
+  { href: `mailto:${profile.email}`, label: "Email", Icon: Mail },
+];
+
+const Hero = () => (
+  <section
+    id="top"
+    className="flex min-h-[100svh] scroll-mt-28 items-center pt-28 pb-20 md:pt-32 md:pb-24"
+  >
+    <div className="grid w-full items-center gap-14 md:grid-cols-[1.15fr_0.85fr] md:gap-16">
+      <div>
+        <Reveal immediate>
+          {profile.available && (
+            <div className="mb-8 flex items-center gap-3">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-pulse-dot rounded-full bg-accent" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+              </span>
+              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-fg-muted">
+                {profile.availableText}
+              </span>
+              <span className="h-px flex-1 max-w-24 bg-[var(--rule)]" />
+            </div>
+          )}
+        </Reveal>
+
+        <Reveal immediate delay={0.06}>
+          <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.22em] text-fg-subtle">
+            <span className="text-accent-fg">(01)</span> {profile.role}
+          </p>
+          <h1 className="font-display text-[3.4rem] leading-[0.95] text-fg sm:text-[4.5rem] lg:text-[5.25rem]">
+            <span className="block">{profile.headline[0]}</span>
+            <span className="block">
+              <span className="marked italic">{profile.headline[1]}</span>
+            </span>
+          </h1>
+        </Reveal>
+
+        <Reveal immediate delay={0.12}>
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-fg-muted md:text-lg">
+            {profile.tagline}
+          </p>
+        </Reveal>
+
+        <Reveal immediate delay={0.18}>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <a
+              href="#projects"
+              className="group inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-all hover:brightness-110 hover:shadow-lg hover:shadow-accent/25 dark:text-ink-950"
+            >
+              View my work
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </a>
+            <a
+              href={profile.resume}
+              download
+              className="group inline-flex items-center justify-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold text-fg transition-colors hover:border-accent/50 hover:text-accent-fg"
+            >
+              Download Resume
+              <ArrowDown className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
+            </a>
+          </div>
+        </Reveal>
+
+        <Reveal immediate delay={0.24}>
+          <div className="mt-9 flex flex-wrap items-center gap-x-5 gap-y-3">
+            <div className="flex items-center gap-2">
+              {socials.map(({ href, label, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={href.startsWith("mailto:") ? undefined : "_blank"}
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="grid h-9 w-9 place-items-center rounded-full border border-border text-fg-muted transition-colors hover:border-accent/50 hover:text-accent-fg"
+                >
+                  <Icon className="h-[17px] w-[17px]" strokeWidth={1.8} />
+                </a>
+              ))}
+            </div>
+            <span className="hidden h-5 w-px bg-border sm:block" />
+            <span className="inline-flex items-center gap-1.5 text-sm text-fg-subtle">
+              <MapPin className="h-4 w-4" strokeWidth={1.8} />
+              {profile.location}
+            </span>
+          </div>
+        </Reveal>
+
+        <Reveal immediate delay={0.3}>
+          <dl className="rule-t mt-12 grid max-w-md grid-cols-3 gap-4 pt-7 sm:gap-6">
+            {stats.map((s) => (
+              <div key={s.label} className="min-w-0">
+                <dt className="sr-only">{s.label}</dt>
+                <dd className="font-display text-3xl text-fg sm:text-4xl">
+                  {s.value}
+                </dd>
+                <p className="mt-1 text-[11px] leading-snug text-fg-subtle sm:text-xs">
+                  {s.label}
+                </p>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
+      </div>
+
+      <Reveal immediate delay={0.15} className="order-first md:order-none">
+        <TiltPhoto />
+      </Reveal>
+    </div>
   </section>
 );
-
-const Hero = () => {
-  return (
-    <Section
-      id="hero"
-      className="min-h-[calc(100vh-5rem)] grid md:grid-cols-2 items-center gap-16"
-    >
-      <div className="space-y-6 text-center md:text-left">
-        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tighter">
-          <span className="block">Web & Artificial Intelligence</span>
-          <span className="block bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 to-blue-500">
-            Developer
-          </span>
-        </h1>
-        <p className="text-lg md:text-xl text-neutral-600 dark:text-neutral-300 max-w-lg mx-auto md:mx-0">
-          Build scalable, responsive, and intelligent web applications with a
-          focus on modern user experiences, leveraging expertise in AI/ML to
-          create smarter and adaptive solutions.
-        </p>
-        <div className="flex gap-4 justify-center md:justify-start pt-4">
-          <a
-            href="#projects"
-            className="bg-cyan-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-cyan-600 transition-colors duration-300"
-          >
-            View Projects
-          </a>
-          <a
-            href="#contact"
-            className="bg-neutral-200 dark:bg-neutral-800 font-semibold px-6 py-3 rounded-lg hover:bg-neutral-300 dark:hover:bg-neutral-700 transition-colors duration-300"
-          >
-            Contact Me
-          </a>
-          <a
-            href="/resume.pdf"
-            download
-            className="bg-neutral-200 dark:bg-neutral-800 font-semibold px-6 py-3 rounded-lg hover:bg-neutral-300 dark:hover:bg-neutral-700 transition-colors duration-300"
-          >
-            Download Resume
-          </a>
-        </div>
-      </div>
-      <div className="relative hidden md:block w-full max-w-sm mx-auto">
-        <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob dark:opacity-40"></div>
-        <div className="absolute top-0 -right-4 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob [animation-delay:2s] dark:opacity-40"></div>
-        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob [animation-delay:4s] dark:opacity-40"></div>
-        <div className="relative p-6 bg-white/50 dark:bg-neutral-800/50 rounded-2xl shadow-lg border border-neutral-300 dark:border-neutral-700">
-          <p className="font-mono text-sm">
-            <span className="text-purple-500">const</span>{" "}
-            <span className="text-yellow-400">developer</span> = &#123; <br />
-            &nbsp;&nbsp;name:{" "}
-            <span className="text-green-400">&apos;Arjun P&apos;</span>, <br />
-            &nbsp;&nbsp;focus: [
-            <span className="text-green-400">&apos;Frontend&apos;</span>,{" "}
-            <span className="text-green-400">&apos;AI/ML&apos;</span>], <br />
-            &nbsp;&nbsp;builds:{" "}
-            <span className="text-cyan-400">awesomeThings</span> <br />
-            &#125;;
-          </p>
-        </div>
-      </div>
-    </Section>
-  );
-};
 
 export default Hero;

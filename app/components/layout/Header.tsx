@@ -1,76 +1,167 @@
-import React from "react";
+"use client";
 
-interface HeaderProps {
-  isDarkMode: boolean;
-  toggleDarkMode: () => void;
-}
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import { Download, Menu, X } from "lucide-react";
+import ThemeToggle from "../ThemeToggle";
+import { profile } from "@/app/data/profile";
 
-const Header: React.FC<HeaderProps> = ({ isDarkMode, toggleDarkMode }) => {
+const links = [
+  { href: "#about", label: "About" },
+  { href: "#experience", label: "Experience" },
+  { href: "#projects", label: "Projects" },
+  { href: "#skills", label: "Skills" },
+  { href: "#contact", label: "Contact" },
+];
+
+const Header = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState<string>("");
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Scroll-spy: highlight whichever section owns the upper part of the viewport.
+  useEffect(() => {
+    const ids = links.map((l) => l.href.slice(1));
+    const sections = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => Boolean(el));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(`#${visible.target.id}`);
+      },
+      { rootMargin: "-25% 0px -60% 0px", threshold: [0, 0.25, 0.5, 1] }
+    );
+
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
+
+  // Lock body scroll while the mobile sheet is open.
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/80 dark:bg-neutral-900/80 backdrop-blur-lg border-b border-neutral-200/50 dark:border-neutral-800/50 transition-colors duration-500">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-        <a
-          href="#"
-          className="flex items-center gap-2 text-xl font-bold tracking-wider hover:text-cyan-500 transition-colors"
-        >
-          <img
-            src="/favicon.ico"
-            alt="Arjun P. logo"
-            className="h-6 w-6 rounded"
-          />
-          Arjun P.
-        </a>
-        <div className="hidden md:flex items-center space-x-8 text-sm font-medium text-neutral-700 dark:text-neutral-300">
-          <a href="#about" className="hover:text-cyan-500 transition-colors">
-            About
-          </a>
-          <a href="#projects" className="hover:text-cyan-500 transition-colors">
-            Projects
-          </a>
-          <a href="#contact" className="hover:text-cyan-500 transition-colors">
-            Contact
-          </a>
-        </div>
-        <button
-          onClick={toggleDarkMode}
-          aria-pressed={isDarkMode}
-          className="relative h-8 w-14 rounded-full border border-neutral-300 dark:border-neutral-700 bg-neutral-200 dark:bg-neutral-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-offset-2 dark:focus:ring-offset-neutral-900"
-          aria-label="Toggle dark mode"
-        >
-          <span
-            className={`absolute top-1 left-1 h-6 w-6 rounded-full bg-white dark:bg-neutral-700 shadow-sm transition-transform duration-300 will-change-transform ${
-              isDarkMode ? "translate-x-6" : "translate-x-0"
-            } flex items-center justify-center`}
+    <header className="fixed top-0 z-50 w-full">
+      <div
+        className={`transition-all duration-300 ${
+          scrolled
+            ? "glass border-b border-border"
+            : "border-b border-transparent"
+        }`}
+      >
+        <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5 sm:px-8">
+          <a
+            href="#top"
+            className="group flex items-center gap-2.5 text-[15px] font-semibold tracking-tight text-fg"
           >
-            <span className="relative h-5 w-5">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className={`absolute inset-0 h-5 w-5 text-yellow-400 transition-opacity duration-200 ${
-                  isDarkMode ? "opacity-0" : "opacity-100"
-                }`}
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.834 6.166a.75.75 0 00-1.06 1.06l1.59 1.591a.75.75 0 001.061-1.06l-1.59-1.59zM3 12a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h2.25A.75.75 0 013 12zM6.166 17.834a.75.75 0 001.06 1.06l1.591-1.59a.75.75 0 00-1.06-1.061l-1.591 1.59z" />
-              </svg>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className={`absolute inset-0 h-5 w-5 text-neutral-700 dark:text-neutral-200 transition-opacity duration-200 ${
-                  isDarkMode ? "opacity-100" : "opacity-0"
-                }`}
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-3.833 2.067-7.17 5.166-9.018a.75.75 0 01.819.162z"
-                  clipRule="evenodd"
-                />
-              </svg>
+            <span className="grid h-8 w-8 place-items-center overflow-hidden rounded-lg bg-accent/12 ring-1 ring-accent/25 transition-colors group-hover:ring-accent/50">
+              <Image
+                src="/favicon.ico"
+                alt=""
+                width={32}
+                height={32}
+                unoptimized
+                className="h-full w-full object-cover"
+              />
             </span>
-          </span>
-        </button>
-      </nav>
+            {profile.name}
+          </a>
+
+          <div className="hidden items-center gap-1 md:flex">
+            {links.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className={`relative rounded-full px-3.5 py-1.5 text-sm transition-colors ${
+                  active === link.href
+                    ? "text-fg"
+                    : "text-fg-muted hover:text-fg"
+                }`}
+              >
+                {active === link.href && (
+                  <span className="absolute inset-0 rounded-full bg-fg/[0.06]" />
+                )}
+                <span className="relative">{link.label}</span>
+              </a>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-2">
+            <a
+              href={profile.resume}
+              download
+              className="group hidden items-center gap-1.5 rounded-full border border-border px-4 py-1.5 text-sm font-medium text-fg-muted transition-colors hover:border-accent/50 hover:text-accent-fg sm:inline-flex"
+            >
+              <Download
+                className="h-3.5 w-3.5 transition-transform group-hover:translate-y-0.5"
+                strokeWidth={1.8}
+              />
+              Resume
+            </a>
+            <ThemeToggle />
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              className="grid h-9 w-9 place-items-center rounded-full border border-border text-fg-muted transition-colors hover:text-fg md:hidden"
+            >
+              {open ? (
+                <X className="h-[18px] w-[18px]" strokeWidth={1.8} />
+              ) : (
+                <Menu className="h-[18px] w-[18px]" strokeWidth={1.8} />
+              )}
+            </button>
+          </div>
+        </nav>
+      </div>
+
+      {/* Mobile sheet -- the site previously had no navigation at all below md */}
+      <div
+        className={`glass overflow-hidden border-b border-border transition-[max-height,opacity] duration-300 md:hidden ${
+          open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <ul className="mx-auto max-w-6xl px-5 py-3 sm:px-8">
+          {links.map((link) => (
+            <li key={link.href}>
+              <a
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="block border-b border-border/60 py-3 text-sm text-fg-muted transition-colors last:border-0 hover:text-accent-fg"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a
+              href={profile.resume}
+              download
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2 py-3 text-sm font-medium text-accent-fg"
+            >
+              <Download className="h-4 w-4" strokeWidth={1.8} />
+              Download Resume
+            </a>
+          </li>
+        </ul>
+      </div>
     </header>
   );
 };

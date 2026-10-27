@@ -1,57 +1,58 @@
 import React from "react";
-import SkillBadge from "../ui/SkillBadge";
+import { GraduationCap, MapPin } from "lucide-react";
+import Section from "../ui/Section";
+import Card from "../ui/Card";
+import Reveal from "../ui/Reveal";
+import Tag from "../ui/Tag";
+import { profile } from "@/app/data/profile";
+import { education } from "@/app/data/education";
 
-const Section: React.FC<{
-  id: string;
-  className?: string;
-  children: React.ReactNode;
-}> = ({ id, children, className = "" }) => (
-  <section id={id} className={`py-20 md:py-28 ${className}`}>
-    {children}
-  </section>
+const About = () => (
+  <Section id="about" index="02" eyebrow="About" title="Both sides of the stack — and of the model.">
+    <div className="grid gap-10 md:grid-cols-5 md:gap-14">
+      <Reveal className="md:col-span-3">
+        <div className="space-y-5 text-base leading-relaxed text-fg-muted md:text-[1.0625rem]">
+          {profile.bio.map((para, i) => (
+            <p key={i}>{para}</p>
+          ))}
+          <p>
+            Recent work spans an LSTM + sentiment engine for crypto forecasting,
+            a LLaMA-powered tutor that reads engagement from facial expressions,
+            and a swarm of search-and-rescue robots coordinating over MQTT.
+          </p>
+        </div>
+      </Reveal>
+
+      <Reveal delay={0.1} className="md:col-span-2">
+        <Card className="p-6">
+          <div className="mb-5 flex items-center gap-2.5">
+            <span className="grid h-9 w-9 place-items-center rounded-lg bg-accent/10 text-accent-fg ring-1 ring-accent/20">
+              <GraduationCap className="h-[18px] w-[18px]" strokeWidth={1.8} />
+            </span>
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-fg-subtle">
+              Education
+            </h3>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <p className="font-mono text-xs text-accent-fg">{education.period}</p>
+            <Tag variant="accent">{education.status}</Tag>
+          </div>
+          <h4 className="mt-2 text-lg font-semibold leading-snug text-fg">
+            {education.degree}
+          </h4>
+          <p className="text-sm text-accent-fg">{education.specialisation}</p>
+          <p className="mt-3 text-sm leading-relaxed text-fg-muted">
+            {education.institution}
+          </p>
+          <p className="mt-4 flex items-center gap-1.5 border-t border-border pt-4 text-xs text-fg-subtle">
+            <MapPin className="h-3.5 w-3.5" strokeWidth={1.8} />
+            {education.location}
+          </p>
+        </Card>
+      </Reveal>
+    </div>
+  </Section>
 );
-const headingClass =
-  "text-3xl md:text-4xl font-bold mb-12 text-center text-neutral-800 dark:text-neutral-100 tracking-tight";
-
-const About = () => {
-  return (
-    <Section id="about">
-      <h2 className={headingClass}>About Me</h2>
-      <div className="grid md:grid-cols-5 gap-12 items-start">
-        <div className="md:col-span-3 text-lg leading-relaxed text-neutral-600 dark:text-neutral-300 space-y-4">
-          <p>
-            Hello! I&apos;m a passionate B. Tech Computer Science (AI) student
-            with a knack for building modern, responsive web applications. I
-            specialize in crafting seamless user experiences using technologies
-            like <strong>Next.js</strong> and <strong>Tailwind CSS</strong>.
-          </p>
-          <p>
-            My expertise isn&apos;t limited to the web development. I&apos;m
-            also deeply interested in machine learning and artificial
-            intelligence, where I enjoy developing intelligent solutions and
-            integrating them into real-world applications. I&apos;m always eager
-            to learn and push the boundaries of technology.
-          </p>
-        </div>
-        <div className="md:col-span-2 p-6 bg-white/50 dark:bg-neutral-800/50 rounded-xl shadow-lg border border-neutral-200 dark:border-neutral-700">
-          <h3 className="text-xl font-bold mb-4 text-neutral-800 dark:text-neutral-100">
-            Core Technologies
-          </h3>
-          <ul className="flex flex-wrap gap-2">
-            <SkillBadge>Next.js</SkillBadge>
-            <SkillBadge>React</SkillBadge>
-            <SkillBadge>Tailwind CSS</SkillBadge>
-            <SkillBadge>TypeScript</SkillBadge>
-            <SkillBadge>Python</SkillBadge>
-            <SkillBadge>AI/ML</SkillBadge>
-            <SkillBadge>Node.js</SkillBadge>
-            <SkillBadge>MongoDB</SkillBadge>
-            <SkillBadge>Git</SkillBadge>
-          </ul>
-        </div>
-      </div>
-    </Section>
-  );
-};
 
 export default About;

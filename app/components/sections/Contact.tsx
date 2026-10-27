@@ -1,17 +1,41 @@
 "use client";
-import React, { useState } from "react";
 
-const Section: React.FC<{
-  id: string;
-  className?: string;
-  children: React.ReactNode;
-}> = ({ id, children, className = "" }) => (
-  <section id={id} className={`py-20 md:py-28 ${className}`}>
-    {children}
-  </section>
-);
-const headingClass =
-  "text-3xl md:text-4xl font-bold mb-12 text-center text-neutral-800 dark:text-neutral-100 tracking-tight";
+import React, { useState } from "react";
+import { Github, Linkedin, Mail, MapPin, Phone, Send } from "lucide-react";
+import Section from "../ui/Section";
+import Card from "../ui/Card";
+import Reveal from "../ui/Reveal";
+import { profile } from "@/app/data/profile";
+
+const channels = [
+  {
+    Icon: Mail,
+    label: "Email",
+    value: profile.email,
+    href: `mailto:${profile.email}`,
+  },
+  {
+    Icon: Phone,
+    label: "Phone",
+    value: profile.phone,
+    href: `tel:${profile.phoneHref}`,
+  },
+  {
+    Icon: Linkedin,
+    label: "LinkedIn",
+    value: `in/${profile.linkedinHandle}`,
+    href: profile.linkedin,
+  },
+  {
+    Icon: Github,
+    label: "GitHub",
+    value: profile.githubHandle,
+    href: profile.github,
+  },
+];
+
+const fieldClass =
+  "w-full rounded-lg border border-border bg-fg/[0.03] px-4 py-2.5 text-sm text-fg placeholder:text-fg-subtle transition-colors focus:border-accent focus:outline-none";
 
 const Contact = () => {
   const [status, setStatus] = useState<
@@ -27,6 +51,14 @@ const Contact = () => {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
+
+    // Honeypot: real users never fill this in.
+    if (formData.get("company")) {
+      setStatus("success");
+      setFeedback("Thanks! Your message has been sent.");
+      form.reset();
+      return;
+    }
 
     try {
       const response = await fetch("https://formspree.io/f/mwpnzlqr", {
@@ -52,79 +84,142 @@ const Contact = () => {
       setFeedback("Network error. Please check your connection and try again.");
     }
   };
+
   return (
-    <Section id="contact">
-      <h2 className={headingClass}>Get in Touch</h2>
-      <div className="max-w-2xl mx-auto p-8 bg-white/50 dark:bg-neutral-800/50 rounded-2xl shadow-lg border border-neutral-200 dark:border-neutral-700">
-        <p className="text-center text-neutral-600 dark:text-neutral-300 mb-8">
-          I&apos;m currently open to new opportunities and collaborations. Feel
-          free to reach out via email or this form. Let&apos;s build something
-          amazing together!
-        </p>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium mb-1">
-                Name
-              </label>
+    <Section
+      id="contact"
+      index="06"
+      eyebrow="Contact"
+      title="Say hello"
+      lead="I'm open to new opportunities and collaborations. Send a message, or reach me directly on any of these."
+    >
+      <div className="grid gap-10 md:grid-cols-5 md:gap-12">
+        <Reveal className="md:col-span-2">
+          <ul className="space-y-3">
+            {channels.map(({ Icon, label, value, href }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-3.5 rounded-xl border border-border px-4 py-3 transition-colors hover:border-accent/45"
+                >
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-accent/10 text-accent-fg ring-1 ring-accent/20">
+                    <Icon className="h-[17px] w-[17px]" strokeWidth={1.8} />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-[11px] uppercase tracking-wider text-fg-subtle">
+                      {label}
+                    </span>
+                    <span className="block truncate text-sm text-fg transition-colors group-hover:text-accent-fg">
+                      {value}
+                    </span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <p className="mt-5 flex items-center gap-1.5 text-sm text-fg-subtle">
+            <MapPin className="h-4 w-4" strokeWidth={1.8} />
+            {profile.location}
+          </p>
+        </Reveal>
+
+        <Reveal delay={0.1} className="md:col-span-3">
+          <Card className="p-6 md:p-8">
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-fg-subtle"
+                  >
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    className={fieldClass}
+                    placeholder="Your name"
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-fg-subtle"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    className={fieldClass}
+                    placeholder="you@example.com"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="message"
+                  className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-fg-subtle"
+                >
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={5}
+                  className={`${fieldClass} resize-y`}
+                  placeholder="Tell me about the role, the project, or just say hi..."
+                  required
+                />
+              </div>
+
+              {/* honeypot */}
               <input
                 type="text"
-                id="name"
-                name="name"
-                className="w-full rounded-md border-neutral-300 dark:border-neutral-700 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 bg-neutral-100 dark:bg-neutral-900 px-4 py-2 transition-colors"
-                placeholder="Your Name"
-                required
+                name="company"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute h-0 w-0 opacity-0"
               />
-            </div>
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-1">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className="w-full rounded-md border-neutral-300 dark:border-neutral-700 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 bg-neutral-100 dark:bg-neutral-900 px-4 py-2 transition-colors"
-                placeholder="you@example.com"
-                required
-              />
-            </div>
-          </div>
-          <div>
-            <label htmlFor="message" className="block text-sm font-medium mb-1">
-              Message
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              rows={5}
-              className="w-full rounded-md border-neutral-300 dark:border-neutral-700 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 bg-neutral-100 dark:bg-neutral-900 px-4 py-2 transition-colors"
-              placeholder="Your message..."
-              required
-            ></textarea>
-          </div>
-          {status !== "idle" && feedback && (
-            <div
-              className={`text-sm rounded-md px-4 py-3 border transition-colors ${
-                status === "success"
-                  ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800"
-                  : status === "error"
-                  ? "bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 border-red-200 dark:border-red-800"
-                  : "bg-neutral-50 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200 border-neutral-200 dark:border-neutral-700"
-              }`}
-              role={status === "error" ? "alert" : undefined}
-            >
-              {feedback}
-            </div>
-          )}
-          <button
-            type="submit"
-            disabled={status === "submitting"}
-            className="w-full py-3 px-4 rounded-lg text-white font-semibold bg-cyan-500 hover:bg-cyan-600 disabled:opacity-70 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 dark:focus:ring-offset-neutral-900 transition-all duration-300 transform hover:scale-105"
-          >
-            {status === "submitting" ? "Sending..." : "Send Message"}
-          </button>
-        </form>
+
+              <div aria-live="polite">
+                {status !== "idle" && feedback && (
+                  <div
+                    role={status === "error" ? "alert" : undefined}
+                    className={`rounded-lg border px-4 py-3 text-sm ${
+                      status === "success"
+                        ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
+                        : "border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-300"
+                    }`}
+                  >
+                    {feedback}
+                  </div>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                disabled={status === "submitting"}
+                className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-all hover:brightness-110 hover:shadow-lg hover:shadow-accent/25 disabled:cursor-not-allowed disabled:opacity-60 dark:text-ink-950"
+              >
+                {status === "submitting" ? "Sending..." : "Send message"}
+                <Send
+                  className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
+                  strokeWidth={1.8}
+                />
+              </button>
+            </form>
+          </Card>
+        </Reveal>
       </div>
     </Section>
   );
