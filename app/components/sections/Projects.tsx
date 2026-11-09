@@ -14,7 +14,13 @@ const Projects = () => (
   >
     <div className="grid gap-5 md:grid-cols-2">
       {featuredProjects.map((project, i) => (
-        <Reveal key={project.slug} delay={i * 0.06}>
+        <Reveal
+          key={project.slug}
+          delay={i * 0.06}
+          className={
+            i === 0 && featuredProjects.length % 2 === 1 ? "md:col-span-2" : undefined
+          }
+        >
           <ProjectCard project={project} />
         </Reveal>
       ))}

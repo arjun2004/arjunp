@@ -14,6 +14,22 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "musiced",
+    title: "MUSICED — Social Network for Music",
+    blurb:
+      "A full-stack social platform for music: listening diary, half-star ratings, threaded reviews, ranked lists, follows and a live activity feed.",
+    description:
+      "A full-stack social platform for music with a listening diary, half-star ratings, reviews with threaded comments, ranked lists, follows and an activity feed. MusicBrainz and Cover Art Archive are integrated through a rate-limited provider layer with idempotent, transactional album import keyed by external ID. Every table is secured with PostgreSQL row-level security and column-level grants, while database triggers maintain rating stats, counters, feeds and notifications. Supabase Realtime powers live notifications, alongside Bayesian-ranked charts, taste-based recommendations, a moderation console and Postgres-backed rate limiting.",
+    tech: ["Next.js 16", "TypeScript", "Supabase", "PostgreSQL", "Tailwind CSS"],
+    category: "Web",
+    year: "2026",
+    featured: true,
+    links: {
+      repo: "https://github.com/arjun2004/MUSICED",
+      demo: "https://musiced.vercel.app",
+    },
+  },
+  {
     slug: "kudukka",
     title: "Kudukka — AI Crypto Investment & Staking",
     blurb:
